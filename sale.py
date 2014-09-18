@@ -13,8 +13,21 @@ from trytond.model import fields
 from trytond.pyson import Eval
 
 
-__all__ = ['Sale']
+__all__ = ['Sale', 'Configuration']
 __metaclass__ = PoolMeta
+
+
+class Configuration:
+    __name__ = 'sale.configuration'
+
+    @classmethod
+    def __setup__(cls):
+        super(Configuration, cls).__setup__()
+
+        method = ('shipment_capped', 'On Shipment (capped to Order total)')
+
+        if method not in cls.sale_shipment_cost_method.selection:
+            cls.sale_shipment_cost_method.selection.append(method)
 
 
 class Sale:
@@ -41,8 +54,8 @@ class Sale:
 
         method = ('shipment_capped', 'On Shipment (capped to Order total)')
 
-        if method not in cls.sale_shipment_cost_method.selection:
-            cls.sale_shipment_cost_method.selection.append(method)
+        if method not in cls.shipment_cost_method.selection:
+            cls.shipment_cost_method.selection.append(method)
 
     def get_shipment_amount(self, name):
         """
@@ -102,7 +115,7 @@ class Sale:
                         and not shipment.cost_invoice_line):
                     invoice_line = shipment.get_cost_invoice_line(invoice)
                     if not invoice_line:
-                        continue
+                        continue  # pragma: no cover
 
                     # now check if the invoice line's amount crosses the
                     # shipment charges remaining to be invoices

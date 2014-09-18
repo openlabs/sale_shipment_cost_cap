@@ -15,12 +15,12 @@ if os.path.isdir(DIR):
 import unittest
 
 import trytond.tests.test_tryton
-from trytond.tests.test_tryton import test_view, test_depends
+from trytond.tests.test_tryton import test_depends
 
 
-class TestViewsDepends(unittest.TestCase):
+class TestDepends(unittest.TestCase):
     '''
-    Test views and depends
+    Test depends
     '''
 
     def setUp(self):
@@ -30,13 +30,7 @@ class TestViewsDepends(unittest.TestCase):
         """
         trytond.tests.test_tryton.install_module('sale_shipment_cost_cap')
 
-    def test0005views(self):
-        '''
-        Test views.
-        '''
-        test_view('sale_shipment_cost_cap')
-
-    def test0006depends(self):
+    def test0005depends(self):
         '''
         Test depends.
         '''
@@ -49,7 +43,7 @@ def suite():
     """
     test_suite = trytond.tests.test_tryton.suite()
     test_suite.addTests(
-        unittest.TestLoader().loadTestsFromTestCase(TestViewsDepends)
+        unittest.TestLoader().loadTestsFromTestCase(TestDepends)
     )
     return test_suite
 

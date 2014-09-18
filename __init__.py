@@ -6,11 +6,12 @@
     :license: BSD, see LICENSE for more details.
 """
 from trytond.pool import Pool
-from .sale import Sale
+from .sale import Sale, Configuration
 
 
 def register():
     Pool.register(
         Sale,
+        Configuration,
         module='sale_shipment_cost_cap', type_='model'
     )

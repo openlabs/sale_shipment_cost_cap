@@ -9,7 +9,8 @@ import unittest
 
 import trytond.tests.test_tryton
 
-from tests.test_views_depends import TestViewsDepends
+from tests.test_views_depends import TestDepends
+from tests.test_shipment_cost_cap import TestShipmentCostCap
 
 
 def suite():
@@ -18,7 +19,8 @@ def suite():
     """
     test_suite = trytond.tests.test_tryton.suite()
     test_suite.addTests([
-        unittest.TestLoader().loadTestsFromTestCase(TestViewsDepends),
+        unittest.TestLoader().loadTestsFromTestCase(TestDepends),
+        unittest.TestLoader().loadTestsFromTestCase(TestShipmentCostCap),
     ])
     return test_suite
 
