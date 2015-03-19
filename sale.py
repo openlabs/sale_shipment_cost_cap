@@ -103,16 +103,16 @@ class Sale:
 
         invoice = super(Sale, self).create_invoice(invoice_type)
 
-        if (invoice
-                and invoice_type == 'out_invoice'
-                and self.shipment_cost_method == 'shipment_capped'):
+        if (invoice and
+                invoice_type == 'out_invoice' and
+                self.shipment_cost_method == 'shipment_capped'):
             with Transaction().set_user(0, set_context=True):
                 invoice = Invoice(invoice.id)
             for shipment in self.shipments:
-                if (shipment.state == 'done'
-                        and shipment.carrier
-                        and shipment.cost
-                        and not shipment.cost_invoice_line):
+                if (shipment.state == 'done' and
+                        shipment.carrier and
+                        shipment.cost and not
+                        shipment.cost_invoice_line):
                     invoice_line = shipment.get_cost_invoice_line(invoice)
                     if not invoice_line:
                         continue  # pragma: no cover
